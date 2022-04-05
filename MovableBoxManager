@@ -10,13 +10,7 @@ public class MovableBoxManager : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager");
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     void OnMouseDrag()
     {
         if (gameManager.GetComponent<GameManager>().isBallMoving == false)

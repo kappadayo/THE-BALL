@@ -5,18 +5,8 @@ using UnityEngine;
 public class gravitySlider : MonoBehaviour
 {
     public GameObject ballPrefab;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // このメソッドはonValueChangedに設定されているのでしょうか。（もしされていない場合はスライダーが動作しません。）
     //重力調節スライダー
     public void gravityChange(float newSliderValue)
     {

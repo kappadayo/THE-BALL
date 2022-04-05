@@ -7,28 +7,33 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    //時間記録のあたり
-    float countTime = 0;
+    // メンバの宣言にもルールがあります。
+    // const -> public -> privateの順番で定義します。
+    // また不要な改行は可読性を下げることに繋がります。避けましょう。
+    // また全ての変数には、必ずprivate or publicをつけましょう。
+    // privateとpublicは、privateにできるならば必ずprivateにしましょう。
+    // そうすることでメモリの節約やコードの単純化、可読性の向上に繋がります。
+    // 例えば、countTimeはprivate、goButtonなどはprivateにできそうです。
+    // privateにしながら、inspectorに出すこともできます。↓のようにします。
+    // [SerializeField] private GameObject goButton;
 
     public int StageNo;
-
-    public bool isBallMoving;
-
+    public bool IsBallMoving;   // publicは大文字始まり。
     public GameObject ballPrefab;
     public GameObject ball;
-
     public GameObject Dark;
-
-    //重力調整のあたり
-    Slider gravitySlider;
-
     public GameObject goButton;
     public GameObject retryButton;
     public GameObject darkButton;
     public GameObject clearText;
     public AudioClip clearSE;
     public AudioClip impactSE;
+    
     private AudioSource audioSource;
+    //時間記録のあたり
+    private float countTime = 0;
+    //重力調整のあたり
+    private Slider gravitySlider; // 適当にprivateを入れてしまいましたが、ひょっとしたら[SerializeField] privateのほうがいいかも？
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +81,15 @@ public class GameManager : MonoBehaviour
         Dark.SetActive(!Dark.activeSelf);
     }
 
+    // コメントをつけることは非常に良い習慣です。続けていきましょう。
+    // しかし、全てのメソッドにコメントがついていたらどうなるでしょうか。コードはコメントだらけて可読性がかえって下がってしまいます。
+    // コメントを入れか入れないかの基準ですが、「そのコードを読んで、理解できるかどうか」で決めるとよいでしょう。
+    // 例えば「PushGravityButton」というメソッドですが、非常に良いわかりやすいメソッド名です。ひと目見ただけで、「グラビティボタンを押したら動作するんだ」ということがわかります。
+    // ですので、ここにはコメントはいらない、ということになります。
+    // コメントは例えばマジックナンバーなどに使うとよいでしょう。ひと目見ても絶対意味がわからないので。
+    // （極論、最強にわかりやすいコードをかけるプログラマーは一行もコメントを入れる必要がない、とも言えるかもしれません。）
+    // （これは読み手にも関わることですので、どんな相手が読むのか？未来の自分か、それとも受け継いだ後輩か？を意識するのは大切かもしれません。）
+    
     //グラビティボタン
     public void PushGravityButton()
     {
@@ -83,12 +97,14 @@ public class GameManager : MonoBehaviour
         cf.enabled = !cf.enabled;
     }
 
+    // できるだけメソッド名は動詞始まりにします。
+    // 例外として、Onから始まるメソッドなども存在します。(OnButtonClickedなど)
     public void StageClear()
     {
         audioSource.PlayOneShot(clearSE);
         clearText.SetActive(true);
         Text t = GameObject.Find("CanvasUI").transform.Find("ClearText").GetComponent<Text>();
-        t.text = "CLEAR!\n"+countTime.ToString();
+        t.text = "CLEAR!\n" + countTime.ToString();
         retryButton.SetActive(false);
         if (PlayerPrefs.GetInt("CLEAR", 0) < StageNo)
         {
@@ -102,6 +118,8 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("StageSelectScene");
     }
 
+    // メソッドは頭文字を大文字にしましょう。C#さんが決めたルールです笑
+    
     //ボールと箱が衝突したとき
     public void impact()
     {

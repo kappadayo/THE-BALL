@@ -4,23 +4,17 @@ using UnityEngine;
 
 public class BallManager : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // 可読性の向上のために不要なメソッドは削除。
 
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag == "OutArea")
         {
+            // Findメソッドは非常に処理が重いメソッドです。できるだけ多用を避けるようにしましょう。
+            // 例えば、以下のような回避方法があります。
+            // メソッドでprivate gameManagerを宣言。
+            // gameManagerがnullならば、Findを実行。nullではなければFindを実行しない。
+            // このようにすることで、Findの回数を減らすことができます。
             GameObject gameManager = GameObject.Find("GameManager");
             gameManager.GetComponent<GameManager>().PushRetryButton();
         }
